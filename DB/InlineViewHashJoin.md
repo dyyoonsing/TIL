@@ -10,12 +10,14 @@
 - TABLE C : 약정원장
 
 C 테이블이 드라이빙 테이블로 A 테이블 OUTER JOIN, B 테이블 INNER JOIN
-- BUT) 
+<br>
+BUT) 
 1. C 테이블 where 검색조건을 만족하는 데이터 결과값:36만건
-2. 플랜 조회해보니 nested loop join으로 진행
+2. 플랜 조회해보니 nested loop join으로 진행 <br>
     nested loop join의 경우 드라이빙 테이블 데이터가 많을수록, inner table의 인덱스에 따라 불리해지기 때문에 많은 양의 데이터를 join하는데 유리한 hash join으로 튜닝 
+<br><br
 
-- 해결)
+해결)
 1. C 테이블 및 그 조건절을 Inline View로 설정 + no_merge 힌트 부여
-2. hash join 힌트 사용
-- /*+ no_merge(c) use_hash(a b c) */
+2. hash join 힌트 사용<br>
+    /*+ no_merge(c) use_hash(a b c) */
